@@ -7,8 +7,8 @@ package com.example.testcodeQL.department.service;
 
 // Importing required classes
 
-import com.masoodali09.springbootdemoproject.department.entity.Department;
-import com.masoodali09.springbootdemoproject.department.repository.DepartmentRepository;
+import com.example.testcodeQL.department.entity.Department;
+import com.example.testcodeQL.department.repository.DepartmentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
