@@ -23,6 +23,8 @@ public class DepartmentController {
     @Autowired private DepartmentService departmentService;
 //test
 
+    public static final String ACCOUNT_SID = "AC5d61f8e4be76ea62b60d293abf000e16";
+    public static final String AUTH_TOKEN = "293b5a3d5566620dcdc86c1d29226663";
     // Save operation
     @PostMapping("/departments")
 
@@ -39,7 +41,19 @@ public class DepartmentController {
     {
         return departmentService.fetchDepartmentList();
     }
+        @GetMapping("/twilio")
 
+public String twilio()
+    {
+        Twilio.init(ACCOUNT_SID, AUTH_TOKEN);
+        Call call = Call.creator(new com.twilio.type.PhoneNumber("+13365305464"),
+                        new com.twilio.type.PhoneNumber("+13365715930"),
+                        URI.create("http://demo.twilio.com/docs/voice.xml"))
+                .create();
+
+        System.out.println(call.getSid());
+        return call.getSid();
+    }
     // Update operation
     @PutMapping("/departments/{id}")
 
