@@ -5,14 +5,15 @@ package com.example.testcodeQL.department.controller;// Java Program to Illustra
 
 // Importing required classes
 
-import com.masoodali09.springbootdemoproject.department.entity.Department;
-import com.masoodali09.springbootdemoproject.department.service.DepartmentService;
+import com.example.testcodeQL.department.entity.Department;
+import com.example.testcodeQL.department.service.DepartmentService;
 import com.twilio.Twilio;
 import com.twilio.rest.api.v2010.account.Call;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.List;
 
 // Annotation
@@ -66,7 +67,24 @@ public String twilio()
     }
 
     @GetMapping("/twilio")
+    public String makeCall() throws URISyntaxException {
+        String accountSid = System.getenv("TWILIO_ACCOUNT_SID");
+        String authToken = System.getenv("TWILIO_AUTH_TOKEN");
+        String toNumber = System.getenv("TWILIO_TO_NUMBER");
+        String fromNumber = System.getenv("TWILIO_FROM_NUMBER");
 
+        // Initialize Twilio
+        Twilio.init(accountSid, authToken);
+
+        // Make a call
+        Call call = Call.creator(
+                new com.twilio.type.PhoneNumber(toNumber),
+                new com.twilio.type.PhoneNumber(fromNumber),
+                new URI("http://demo.twilio.com/docs/voice.xml")  // Your TwiML URL
+        ).create();
+
+        return "Call initiated: " + call.getSid();
+    }
 
 
     // Delete operation
