@@ -27,6 +27,20 @@ public class DepartmentController {
     public static final String ACCOUNT_SID = "AC5d61f8e4be76ea62b60d293abf000e16";
     public static final String AUTH_TOKEN = "293b5a3d5566620dcdc86c1d29226663";
     // Save operation
+    // ADD THIS METHOD TO TRIGGER CODEQL ALERT
+    @GetMapping("/test-codeql")
+    public String testCodeQL(@RequestParam String input) {
+        // This will trigger SQL Injection alert
+        String query = "SELECT * FROM departments WHERE name = '" + input + "'";
+
+        // This will trigger Command Injection alert
+        try {
+            Runtime.getRuntime().exec("echo " + input);
+        } catch (Exception e) {}
+
+        // This will trigger XSS alert
+        return "<script>alert('" + input + "')</script>";
+    }
     @PostMapping("/departments")
 
     public Department saveDepartment(
